@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TaskBite setup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" />
+<style>
+  :root { --bg:#f6f4ee; --ink:#26302b; --soft:#6d756f; --card:#fff; --accent:#3f7d5c; --accent-soft:#e3efe7; --bad:#b23b1e; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Lexend", system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+  main { max-width: 560px; margin: 0 auto; padding: 32px 20px 60px; display: grid; gap: 16px; }
+  h1 { margin: 0; font-size: 26px; }
+  h2 { margin: 0 0 6px; font-size: 16px; }
+  .lead { margin: 0; color: var(--soft); font-size: 15px; }
+  .card { background: var(--card); border-radius: 16px; padding: 18px; display: grid; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  label { display: grid; gap: 6px; font-weight: 600; font-size: 14px; }
+  input[type=password], input[type=text], select { font: inherit; font-weight: 400; padding: 10px 12px; border: 1.5px solid #cfc9bb; border-radius: 10px; background: #fff; color: inherit; width: 100%; }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .check { display: flex; gap: 8px; align-items: center; font-weight: 400; }
+  .small { margin: 0; font-size: 13px; color: var(--soft); }
+  a { color: var(--accent); font-weight: 600; }
+  details { font-size: 14px; }
+  summary { cursor: pointer; color: var(--soft); margin-bottom: 8px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  button { font: inherit; font-weight: 600; padding: 11px 16px; border-radius: 12px; border: 0; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: default; }
+  .primary { background: var(--accent); color: #fff; }
+  .ghost { background: #fff; color: var(--ink); border: 1.5px solid #c9c3b6; }
+  .link { background: none; color: var(--bad); padding: 0; font-size: 13px; justify-self: start; }
+  #msg { min-height: 20px; font-size: 14px; }
+  #msg.good { color: var(--accent); font-weight: 600; }
+  #msg.bad { color: var(--bad); font-weight: 600; }
+  ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Set up TaskBite</h1>
+  <p class="lead">The help button needs an AI to explain the problem you select. Pick either option below. There are no canned tips: if neither is set up, help is off.</p>
+
+  <section class="card">
+    <h2>Option A: Free on-device AI (no key)</h2>
+    <p class="small">Uses the AI built into Chrome. It runs on your computer, costs nothing, and the part you select never leaves it. It needs a recent Chrome on Windows, Mac or Linux (or a Chromebook Plus), about 22 GB of free space for a one-time download, and a graphics card with 4 GB+ of memory or 16 GB of RAM. Many school Chromebooks can't run it.</p>
+    <div id="odStatus" role="status" style="font-weight:600;font-size:14px">Checking…</div>
+    <div class="row">
+      <button id="odGo" class="primary" hidden>Download the free AI</button>
+      <button id="odCheck" class="ghost">Check again</button>
+    </div>
+    <div id="odBar" hidden style="height:10px;background:#e3efe7;border-radius:999px;overflow:hidden"><div id="odFill" style="height:100%;width:0;background:var(--accent)"></div></div>
+  </section>
+
+  <section class="card">
+    <h2>Option B: Your own AI key</h2>
+    <label>1. Pick an AI provider
+      <select id="provider"></select>
+    </label>
+    <p class="small"><a id="getKey" target="_blank" rel="noopener"></a> — sign in, create a key, then paste it below.</p>
+
+    <label>2. Paste your API key
+      <input id="key" type="password" autocomplete="off" spellcheck="false" />
+    </label>
+    <label class="check"><input type="checkbox" id="showKey" /> Show key</label>
+
+    <details>
+      <summary>Advanced: choose a model</summary>
+      <label>Model (leave blank for the default)
+        <input id="model" type="text" spellcheck="false" autocomplete="off" />
+      </label>
+    </details>
+
+    <div class="row">
+      <button id="save" class="primary">Save &amp; test</button>
+      <button id="saveAnyway" class="ghost" hidden>Save anyway</button>
+      <button id="skip" class="ghost">Skip for now</button>
+    </div>
+    <div id="msg" role="status"></div>
+  </section>
+
+  <section class="card">
+    <h2>Before you start</h2>
+    <ul>
+      <li>Your key is saved only in this browser, and it is only ever sent to the provider you picked.</li>
+      <li>When you use Get help, the screenshot of the part you select and the assignment's name and description are sent to the provider you picked. Nothing goes to any TaskBite server.</li>
+      <li>API use is billed by your provider, usually a small amount per question. Set a spending limit in their dashboard.</li>
+      <li>Most providers require an adult to create an API account. If you're a student, ask a parent or guardian to make the key with you.</li>
+      <li>TaskBite explains the concept, shows the method, and checks your work. It doesn't give final answers.</li>
+      <li>You can skip this and use the timer and checklist only; the help button just needs one of the two options above. Reopen this page with the ⚙ button in the popup.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Focus mode: sites that stay open</h2>
+    <p class="small">When you lock in, your assignment's site stays open, and so does anything the assignment sends you to (a Google Doc or Slides, another site, a login page). Sites you type in yourself are blocked. List any extra sites to always allow (one per line).</p>
+    <textarea id="allow" rows="5" spellcheck="false" style="font:inherit;font-weight:400;padding:10px 12px;border:1.5px solid #cfc9bb;border-radius:10px;width:100%"></textarea>
+    <div class="row"><button id="saveAllow" class="primary">Save sites</button></div>
+    <div id="allowMsg" class="small" role="status"></div>
+  </section>
+
+  <button id="remove" class="link" hidden>Remove my saved key</button>
+</main>
+<script src="ai.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

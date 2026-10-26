@@ -1,0 +1,95 @@
+:host, .fl-root { all: initial; }
+.fl-root {
+  font-family: "Lexend", "Segoe UI", system-ui, sans-serif;
+  color: #26302b;
+  line-height: 1.35;
+}
+.fl-dim {
+  position: fixed; inset: 0; z-index: 2147483646;
+  cursor: crosshair;
+  background: rgba(28, 36, 32, .28);
+}
+.fl-banner {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 2147483647;
+  background: #fffdf8; color: #26302b;
+  padding: 10px 16px; border-radius: 999px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.18);
+  font: 600 15px/1.3 "Lexend", "Segoe UI", system-ui, sans-serif;
+  pointer-events: none; max-width: 90vw; text-align: center;
+}
+.fl-sel {
+  position: fixed; z-index: 2147483647;
+  border: 2px solid #3f7d5c;
+  background: rgba(63, 125, 92, .12);
+  box-shadow: 0 0 0 9999px rgba(28, 36, 32, .45);
+  pointer-events: none;
+}
+.fl-cancel {
+  position: fixed; top: 16px; right: 16px; z-index: 2147483647;
+  font: 600 14px "Lexend", system-ui, sans-serif;
+  background: #fff; color: #26302b; border: 0; border-radius: 10px;
+  padding: 8px 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.12);
+}
+.fl-panel {
+  position: fixed; right: 16px; bottom: 16px; width: min(400px, calc(100vw - 24px));
+  max-height: min(82vh, 640px); overflow: auto;
+  z-index: 2147483647;
+  background: #f6f4ee; color: #26302b;
+  border-radius: 18px; padding: 14px;
+  box-shadow: 0 16px 50px rgba(0,0,0,.22);
+  display: flex; flex-direction: column; gap: 10px;
+}
+/* The chat log is the only part that shrinks, so the buttons never get pushed off-screen. */
+.fl-panel > * { flex: none; }
+.fl-panel > .fl-log { flex: 1 1 140px; min-height: 90px; }
+.fl-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.fl-head h2 { margin: 0; font-size: 16px; }
+.fl-x {
+  font: 600 14px system-ui, sans-serif; background: none; border: 0; color: #6d756f;
+  cursor: pointer; padding: 4px 8px; border-radius: 8px;
+}
+.fl-x:hover { background: #e8e4da; }
+.fl-shot { width: 100%; border-radius: 12px; display: block; max-height: 90px; object-fit: contain; background: #e8e4da; }
+
+.fl-log { display: grid; gap: 8px; overflow: auto; align-content: start; }
+.fl-bubble {
+  border-radius: 14px; padding: 10px 12px; font-size: 15px;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.fl-bubble.coach { background: #fff; justify-self: start; max-width: 96%; }
+.fl-bubble.me { background: #e3efe7; justify-self: end; max-width: 88%; }
+.fl-bubble.err { background: #fbe4dc; color: #8a3a22; font-size: 14px; }
+.fl-wait { color: #6d756f; font-style: italic; }
+.fl-meta { margin-top: 4px; font-size: 11px; color: #8a918c; }
+.fl-link {
+  font: 600 13px "Lexend", system-ui, sans-serif; color: #3f7d5c; background: none; border: 0;
+  padding: 4px 0 0; cursor: pointer; text-align: left; text-decoration: underline;
+}
+
+.fl-ask { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; }
+.fl-input {
+  font: 400 15px "Lexend", system-ui, sans-serif; color: #26302b;
+  padding: 9px 10px; border: 1.5px solid #c9c3b6; border-radius: 12px; background: #fff;
+  resize: none; width: 100%; box-sizing: border-box;
+}
+.fl-input:focus { outline: 2px solid #3f7d5c; outline-offset: 1px; }
+.fl-input:disabled { opacity: .6; }
+
+.fl-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.fl-actions [hidden] { display: none; }
+.fl-btn {
+  font: 600 14px "Lexend", system-ui, sans-serif;
+  padding: 9px 12px; border: 0; border-radius: 12px; cursor: pointer;
+}
+.fl-btn:disabled { opacity: .55; cursor: default; }
+.fl-btn.primary { background: #3f7d5c; color: #fff; }
+.fl-btn.ghost { background: #fff; color: #26302b; border: 1.5px solid #c9c3b6; }
+.fl-btn.warn { background: #fbe4dc; color: #8a3a22; }
+.fl-soft { font-size: 12px; color: #6d756f; margin: 0; }
+.fl-chip {
+  position: fixed; right: 16px; bottom: 16px; z-index: 2147483000;
+  font: 600 14px "Lexend", system-ui, sans-serif;
+  background: #3f7d5c; color: #fff; border: 0; border-radius: 999px;
+  padding: 10px 14px; cursor: pointer; box-shadow: 0 8px 24px rgba(63,125,92,.35);
+}

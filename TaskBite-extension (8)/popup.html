@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" />
+<style>
+  :root { --bg:#f6f4ee; --ink:#26302b; --soft:#6d756f; --card:#fff; --accent:#3f7d5c; --accent-soft:#e3efe7; --warn:#c2722d; }
+  body { width: 380px; max-height: 590px; margin: 0; font-family: "Lexend", system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+  header { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2ddd0; }
+  header b { font-size: 18px; }
+  .ghost { background: none; border: 1.5px solid var(--ink); border-radius: 8px; padding: 4px 8px; font: inherit; font-size: 13px; cursor: pointer; color: inherit; }
+  main { padding: 12px 16px; display: grid; gap: 10px; }
+  .primary { font: inherit; font-size: 16px; font-weight: 600; padding: 12px; border: 0; border-radius: 12px; background: var(--accent); color: #fff; cursor: pointer; }
+  .helpBtn { font: inherit; font-size: 15px; font-weight: 600; padding: 11px; border: 0; border-radius: 12px; background: #f3e6c8; color: #5c4a22; cursor: pointer; }
+  #status { font-size: 13px; color: var(--soft); min-height: 16px; }
+  .calm { font-size: 14px; color: var(--soft); margin: 0; }
+  .task { background: var(--card); border-radius: 14px; padding: 12px; display: grid; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .task.now { border: 2px solid #cfe0d4; }
+  .pill.miss { background: #fbe4dc; color: #b23b1e; }
+  .task.done { opacity: .5; }
+  .row { display: flex; gap: 10px; align-items: flex-start; }
+  .row input { width: 22px; height: 22px; accent-color: var(--accent); margin-top: 2px; flex: none; }
+  .name { font-weight: 600; font-size: 15px; }
+  .name.open { cursor: pointer; color: var(--accent); }
+  .name.open:hover { text-decoration: underline; }
+  .meta { font-size: 12px; color: var(--soft); display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 2px 8px; font-weight: 600; }
+  .steps { display: grid; gap: 4px; padding-left: 32px; font-size: 13px; }
+  .steps label { display: flex; gap: 6px; align-items: center; }
+  .steps .x { text-decoration: line-through; color: var(--soft); }
+  .startBtn { font: inherit; font-weight: 600; font-size: 13px; padding: 5px 14px; border: 0; border-radius: 999px; background: var(--accent); color: #fff; cursor: pointer; }
+  .link { background: none; border: 0; color: var(--accent); font: inherit; font-size: 13px; cursor: pointer; padding: 0; text-align: left; }
+  #focus { text-align: center; }
+  #focus .big { font-size: 22px; font-weight: 700; margin: 8px 0; }
+  #timer { font-size: 48px; font-weight: 700; color: var(--accent); }
+  #fStart { font-size: 24px; padding: 22px 16px; border-radius: 16px; }
+  #fHelp { font-size: 17px; padding: 14px; }
+  .tiny { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  #timeUp { background: #fff; border: 2px solid #f0c9a8; border-radius: 14px; padding: 10px; display: grid; gap: 8px; text-align: left; font-size: 14px; }
+  #timeUp .r3, #timeUp .r2 { display: flex; gap: 8px; }
+  #timeUp button { flex: 1; font: inherit; font-weight: 600; font-size: 14px; padding: 9px; border: 0; border-radius: 10px; background: var(--accent-soft); color: var(--accent); cursor: pointer; }
+  #timeUp input { flex: 2; min-width: 0; font: inherit; padding: 8px 10px; border: 1.5px solid #cfc9bb; border-radius: 10px; }
+  .empty { text-align: center; color: var(--soft); padding: 20px 0; font-size: 14px; }
+  .btns { display: grid; gap: 8px; }
+  #note { font-size: 13px; color: var(--soft); min-height: 16px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header><b style="display:flex;align-items:center;gap:8px"><img src="icon32.png" width="24" height="24" alt="" />TaskBite</b><span><button class="ghost" id="aiSettings" title="AI settings">⚙</button></span></header>
+<main id="list">
+  <p class="calm" id="breathe" data-i="breathe"></p>
+  <div class="btns">
+    <button class="primary" id="scan" data-i="scan"></button>
+    <button class="helpBtn" id="help" data-i="help"></button>
+  </div>
+  <div id="status"></div>
+  <button class="link" id="lockBar" hidden></button>
+  <div id="summary" class="meta"></div>
+  <div id="now"></div>
+  <button class="link" id="toggleRest" hidden></button>
+  <div id="tasks" hidden></div>
+  <button class="link" id="toggleDone" hidden></button>
+  <div id="doneBox" hidden></div>
+</main>
+<main id="focus" hidden>
+  <div class="meta" style="justify-content:center" id="fTask"></div>
+  <div class="big" id="fStep"></div>
+  <div id="timer">00:00</div>
+  <div id="note"></div>
+  <div id="timeUp" hidden>
+    <b data-i="needMore"></b>
+    <div class="r3"><button data-m="5">+5 min</button><button data-m="10">+10 min</button><button data-m="15">+15 min</button></div>
+    <div class="r2"><input id="moreMin" type="number" min="1" max="120" placeholder="Type minutes" /><button id="moreAdd" data-i="addBtn"></button></div>
+  </div>
+  <button class="primary" id="fStart"></button>
+  <button class="helpBtn" id="fHelp" data-i="help"></button>
+  <div class="tiny">
+    <button class="link" id="back" data-i="back"></button>
+    <button class="link" id="fNext" data-i="next"></button>
+    <button class="link" id="fLock"></button>
+  </div>
+</main>
+<script src="estimate.js"></script>
+<script src="coach.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f6b4d"/>
+      <stop offset="1" stop-color="#1d4a35"/>
+    </linearGradient>
+    <mask id="bite">
+      <rect width="128" height="128" fill="#fff"/>
+      <!-- three overlapping circles = the bite, top-right -->
+      <circle cx="98" cy="38" r="17" fill="#000"/>
+      <circle cx="112" cy="58" r="13" fill="#000"/>
+      <circle cx="80" cy="24" r="12" fill="#000"/>
+    </mask>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="url(#bg)"/>
+  <!-- the task: a round cookie-like disc with a bite out of it -->
+  <circle cx="62" cy="68" r="43" fill="#f7efd8" mask="url(#bite)"/>
+  <!-- crumbs -->
+  <circle cx="104" cy="22" r="4.5" fill="#f3c04a"/>
+  <circle cx="115" cy="36" r="3" fill="#f3c04a"/>
+  <!-- the check -->
+  <path d="M37 73 L52 88 L78 57" fill="none" stroke="#2f6b4d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Focus mode</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: "Lexend", system-ui, sans-serif; background: #f6f4ee; color: #26302b; }
+  main { max-width: 420px; padding: 24px; text-align: center; display: grid; gap: 14px; }
+  h1 { margin: 0; font-size: 26px; }
+  p { margin: 0; color: #6d756f; font-size: 16px; }
+  button { font: inherit; font-weight: 600; padding: 14px 18px; border-radius: 14px; border: 0; cursor: pointer; font-size: 16px; }
+  .primary { background: #3f7d5c; color: #fff; }
+  .ghost { background: #fff; color: #26302b; border: 1.5px solid #c9c3b6; }
+</style>
+</head>
+<body>
+<main>
+  <h1>🔒 Focus mode is on</h1>
+  <p>That site is blocked while you work on your assignment. You've got this.</p>
+  <button id="back" class="primary">Back to my assignment</button>
+  <button id="exit" class="ghost">Exit focus mode</button>
+</main>
+<script src="blocked.js"></script>
+</body>
+</html>
