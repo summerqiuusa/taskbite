@@ -6,8 +6,6 @@ Works with Canvas, Google Classroom, Moodle, Blackboard and Schoology, (however 
 
 How to install from Github:
 
-1. Download the code
-
 Open the GitHub repository page for TaskBite.
 Click the green Code button.
 Click Download ZIP.
